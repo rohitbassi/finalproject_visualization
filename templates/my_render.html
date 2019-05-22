@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+            #rightbox{ 
+                float:right; 
+                margin-right: 70px;
+                width:25%; 
+                height:280px; 
+            }
+            .dc-chart .pie-slice.external {
+    fill: white;
+}</style>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Final Project Visualization</title>
+  <link rel="shortcut icon" href="">
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/bootstrap/css/dash_css.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.9/dc.css"/> -->
+</head>
+<script src="../static/jquery/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+                                                                <!-- Commented this line -->
+  <!-- <script src="../static/bootstrap/js/my_js.js"></script> -->
+  <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script src="//d3js.org/queue.v1.min.js"></script>
+  <script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
+  <script src="../static/bootstrap/js/tooltip.js"></script> 
+<script type="text/javascript" src="https://rawgithub.com/NickQiZhu/dc.js/master/web/js/crossfilter.js"></script>
+<script type="text/javascript" src="https://dc-js.github.io/dc.js/js/dc.js"></script>
+
+<!-- <script type="text/javascript" src="../temp.json"></script> -->
+
+<body>
+  <!-- <div id="test" style="margin: 15px;"></div>
+  <div id = "scatter" style="margin: 15px;"></div>
+  <div id="chart" style="margin: 15px;"></div> -->
+
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Final Project</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home
+              <!-- <span class="sr-only">(current)</span> -->
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="but1" href="/dash">Player Distribution</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" id="but2" href="/dash2">Player Statistics</a>
+          </li>
+          <li class="nav-item">
+                <a class="nav-link" id="but3" href="/dashboard">Dashboard</a>
+          </li> -->
+          <li class="nav-item">
+                <a class="nav-link" id="but4" href="/my_render">My Render</a>
+          </li>
+          <li class="nav-item">
+                <a class="nav-link" id="but5" href="/play_dash">Player Dash</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div id="dynamic_input">
+        <div class="row">
+                <!-- <div class="col-md-3"></div> -->
+                <div class="col-md-3" id="first">
+                        <select id="players_data_input" class="form-control">
+                                <!-- <option value="0">Please select Range</option> -->
+                                <option value="1">0 - 3000</option>
+                                <option value="2">3000 - 6000</option>
+                                <option value="3">6000 - 10000</option>
+                        </select>
+                </div>
+                <div class="col-md-3">
+                   <div class="col-md-2">
+                    <button id="submit" type="button" class="btn btn-success">Reset</button>
+                   </div> 
+                </div>
+                <!-- <div class="col-md-3"></div> -->
+              </div>
+  </div>
+
+  
+  <div class="dash_container" float="top">
+      <div class="dash_col" id = "pie_cont" style="margin-top: 30px;">
+        <!-- First One -->
+        <h7 align="center" id="headers" style="display:none">Players by Continent</h7>
+        <!-- <div id="continent" style="margin-left: 15px; margin-top: 30px;"></div> -->
+      </div>
+      <div class="dash_col" id = "bar_char" style="margin-top: 30px;">
+          <!-- Third One -->
+          <h7 align="center" id="headers_pop" style="display:none">Country wise filtering</h7>
+          <div id="chart" style="margin: 15px;"></div>
+      </div>
+        <!-- <div class="dash_container"> -->
+            <div id = "rightbox" style="margin-top: 30px;"> 
+                    <h7 align="center" id="headers_two" style="display:none">Football Clubs Total Value</h7>
+                   <div class="dash_col_extend" id = "row_char">
+                      <!-- Second One -->
+                      
+                      <!-- <div id="scatter" style="margin: 15px;"></div> -->
+                </div>
+              </div>
+      <!-- <div class="dash_col_extend" id = "row_char" style="margin-top: 30px;"> -->
+            <!-- Second One -->
+            <!-- <div id="scatter" style="margin: 15px;"></div> -->
+      <!-- </div> -->
+      <!-- <div class="dash_col_three" id = "player_stat" style="margin-top: 105px;"> -->
+            <!-- Third One -->
+            <!-- <div id="chart" style="margin: 15px;"></div> -->
+        <!-- </div> -->
+   
+  </div>
+  <div style="margin-top: 40px;">
+    <h7 align="center" id="headers_srow">Players Positions</h7>
+    <div class="dash_col_three" id = "player_stat" style="margin-top: 35px;">
+        <!-- Third One -->
+        <!-- <div id="chart" style="margin: 15px;"></div> -->
+    </div>
+  </div>
+  <h7 align="center" id="headers_srow" style="margin-left: -400px;">Top 20 Players Overall Score</h7>
+  <div class="dash_col_overall" id = "linechart" style="margin-top: 15px;">
+      <!-- Third One -->
+      <!-- <h4 align="center" id="linechart" style="color:red">OVERALL</h4> -->
+      <!-- <div id="chart" style="margin: 15px;"></div> -->
+  </div>
+
+  <div style="    margin-top: 410px;">
+    <h7 align="center" id="headers_srow">Wage Distribution</h7>
+    <div class="bottom-one" id = "wage" style="margin-top: 35px;">
+        <!-- Third One -->
+        <!-- <div id="chart" style="margin: 15px;"></div> -->
+    </div>
+  </div>
+  <!-- <h7 align="center" id="headers_srow">Players Listing</h7> -->
+    <div class="data-count" id="data_count" style="margin-top: 18px;margin-left: 150px; margin-bottom: 20px;">
+
+    </div>
+ 
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../static/jquery/jquery.min.js"></script>
+  <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/bootstrap/js/my_render.js"></script>
+  </body>
+  </html>
